@@ -1,13 +1,21 @@
 const express = require("express");
 const app = express();
-const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
+
 const routes = require("./routes/users");
 const cors = require("cors");
 const db = require("./db");
+const envs = require("./config/envs");
 
-app.use(cors("http://localhost:3000"));
-app.use(morgan("dev"));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api", routes);
 
 const port = 3001;
