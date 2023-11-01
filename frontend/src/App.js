@@ -1,17 +1,13 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import axios from "axios";
+// import axios from "axios";
+import Register from "./components/Register";
 function App() {
-  const pedidoAMiApi = () => {
-    axios.get("http://localhost:3001/api").then((respuesta) => {
-      console.log(respuesta.data);
-    });
-  };
-
   return (
     <div>
-      <h1>Holass mundo</h1>
-
-      <button onClick={pedidoAMiApi}>Pedido</button>
+      <Routes>
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </div>
   );
 }

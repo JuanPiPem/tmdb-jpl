@@ -1,9 +1,8 @@
 const express = require("express");
 
-const { generateToken, validateToken } = require("../config/token");
-
+const { generateToken, validateToken } = require("../config/tokens");
+const { validateAuth } = require("../middlewares/auth");
 const router = express.Router();
-
 const User = require("../db/models/user");
 
 router.get("/users", (req, res) => {
@@ -38,16 +37,37 @@ router.post("/users/login", (req, res) => {
       const payload = {
         email: user.email,
         name: user.name,
-        lastname: user.lastname,
+        last_name: user.last_name,
       };
 
       const token = generateToken(payload);
 
-      res.cookie("token", token);
+      res.cookie("Holaaaa", token);
 
       res.send(payload);
     });
   });
 });
+
+// router.get("/users/secret", validateAuth, (req, res) => {
+//   res.send(req.user);
+// });
+
+// router.get("users/me", validateAuth, (req, res) => {
+//   res.send(req.user);
+// });
+
+// router.post("users/logout", (req, res) => {
+//   res.clearCookie("token");
+
+//   res.sendStatus(204);
+// });
+
+// router.get("/users/secret", (req, res) => {
+//   const token = req.cookies.token;
+//   const isValid = validateToken(token);
+
+//   res.send(payload);
+// });
 
 module.exports = router;
