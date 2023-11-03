@@ -1,0 +1,28 @@
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+}
+
+.movie-card {
+  padding: 10px;
+
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.movie-card img {
+  max-width: 100%;
+}
+
+.movie-poster {
+  border-radius: 10px;
+}
+
+.movie-card:hover {
+  transform: scale(1.2);
+}
+
+.movie-card:hover .movie-title {
+  color: blue;
+}

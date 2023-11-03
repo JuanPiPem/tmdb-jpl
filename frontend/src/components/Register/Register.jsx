@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     lastName: "",
@@ -42,13 +44,20 @@ const Register = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3001/api/users/login", {
-        email: formData.loginEmail,
-        password: formData.loginPassword,
-      })
+      .post(
+        "http://localhost:3001/api/users/login",
+        {
+          email: formData.loginEmail,
+          password: formData.loginPassword,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         if (response.status === 200) {
           console.log("Inicio de sesión exitoso");
+          navigate("/");
         }
       })
       .catch((error) => {

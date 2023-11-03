@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
 
-const routes = require("./routes/users");
+const routes = require("./routes");
 const cors = require("cors");
 const db = require("./db");
 const envs = require("./config/envs");

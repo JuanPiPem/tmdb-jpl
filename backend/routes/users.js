@@ -3,9 +3,10 @@ const express = require("express");
 const { generateToken, validateToken } = require("../config/tokens");
 const { validateAuth } = require("../middlewares/auth");
 const router = express.Router();
+const axios = require("axios");
 const User = require("../db/models/user");
 
-router.get("/users", (req, res) => {
+router.get("/", (req, res) => {
   User.findAll()
     .then((users) => {
       res.status(200).send(users);
@@ -15,7 +16,7 @@ router.get("/users", (req, res) => {
     });
 });
 
-router.post("/users/register", (req, res) => {
+router.post("/register", (req, res) => {
   User.create(req.body)
 
     .then((newUser) => {
@@ -27,7 +28,7 @@ router.post("/users/register", (req, res) => {
     });
 });
 
-router.post("/users/login", (req, res) => {
+router.post("/login", (req, res) => {
   const { email, password } = req.body;
   User.findOne({ where: { email } }).then((user) => {
     if (!user) return res.sendStatus(401);
@@ -42,32 +43,25 @@ router.post("/users/login", (req, res) => {
 
       const token = generateToken(payload);
 
-      res.cookie("Holaaaa", token);
+      res.cookie("token", token, {
+        sameSite: "none",
+        httpOnly: true,
+        secure: true,
+      });
 
       res.send(payload);
     });
   });
 });
 
-// router.get("/users/secret", validateAuth, (req, res) => {
-//   res.send(req.user);
-// });
-
-// router.get("users/me", validateAuth, (req, res) => {
-//   res.send(req.user);
-// });
+router.get("/me", validateAuth, (req, res) => {
+  res.send(req.user);
+});
 
 // router.post("users/logout", (req, res) => {
 //   res.clearCookie("token");
 
 //   res.sendStatus(204);
-// });
-
-// router.get("/users/secret", (req, res) => {
-//   const token = req.cookies.token;
-//   const isValid = validateToken(token);
-
-//   res.send(payload);
 // });
 
 module.exports = router;
