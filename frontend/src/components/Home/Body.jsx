@@ -10,10 +10,8 @@ const Body = () => {
       .get(
         "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
         {
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZTQ0YjVkMTZmNDAxNjJlM2JlMGI2OD11YTVjYzAwZSIsInN1YiI6IjY1M2ZkOWRhNTA3MzNjMDBmZjRiNmU3ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ana14Nl3FjCTn1-sP0iaD2KuOqJgmt0i5QT8yf9yRVA",
+          params: {
+            api_key: "ee44b5d16f40162e3be0b6811a5cc00e",
           },
         }
       )

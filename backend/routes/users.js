@@ -58,10 +58,10 @@ router.get("/me", validateAuth, (req, res) => {
   res.send(req.user);
 });
 
-// router.post("users/logout", (req, res) => {
-//   res.clearCookie("token");
+router.post("/logout", (req, res) => {
+  res.cookie("token", "", { secure: false, expires: new Date(0) });
 
-//   res.sendStatus(204);
-// });
+  res.sendStatus(204);
+});
 
 module.exports = router;
