@@ -2,26 +2,17 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "./Header";
 import Body from "./Body";
+import MovieInfo from "./MovieInfo";
+
 import { useNavigate } from "react-router-dom";
 
 const Movies = () => {
   const [user, setUser] = useState({});
   const [searchResults, setSearchResults] = useState([]);
+  const [info, setInfo] = useState(null);
   const navigate = useNavigate();
 
-  const handleSearch = (event) => {
-    // Escucha cambios en el campo de búsqueda, pero no realiza la búsqueda aún.
-    // Aquí puedes implementar lógica adicional si es necesario.
-  };
-
-  const handleSearchKeyPress = (event) => {
-    if (event.key === "Enter") {
-      // Realiza la búsqueda cuando el usuario presiona Enter.
-      performSearch(event.target.value);
-    }
-  };
-
-  const performSearch = (searchTerm) => {
+  const handleSearch = (searchTerm) => {
     axios
       .get("https://api.themoviedb.org/3/search/movie", {
         params: {
@@ -37,6 +28,11 @@ const Movies = () => {
       });
   };
 
+  const handleInfo = (movie) => {
+    console.log("Mostrando información de la película:", movie);
+    setInfo(movie);
+  };
+
   useEffect(() => {
     axios
       .get("http://localhost:3001/api/users/me", { withCredentials: true })
@@ -50,12 +46,9 @@ const Movies = () => {
     <div>
       {user.name ? (
         <div>
-          <Header
-            user={user}
-            search={handleSearch}
-            searchKeyPress={handleSearchKeyPress}
-          />
-          <Body movies={searchResults} />
+          <Header user={user} search={handleSearch} />
+          <Body movies={searchResults} onMovieInfo={handleInfo} />
+          {info && <MovieInfo movie={info} />}
         </div>
       ) : (
         navigate("/register")
