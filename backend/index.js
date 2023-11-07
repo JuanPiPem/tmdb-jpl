@@ -3,6 +3,7 @@ const app = express();
 const cookieParser = require("cookie-parser");
 
 const routes = require("./routes");
+const favoritesRoutes = require("./routes/favorites");
 const cors = require("cors");
 const db = require("./db");
 const envs = require("./config/envs");
@@ -16,6 +17,7 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+
 app.use("/api", routes);
 
 const port = 3001;

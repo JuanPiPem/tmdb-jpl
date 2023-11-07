@@ -5,6 +5,7 @@ const { validateAuth } = require("../middlewares/auth");
 const router = express.Router();
 const axios = require("axios");
 const User = require("../db/models/user");
+const Favorite = require("../db/models/favorites");
 
 router.get("/", (req, res) => {
   User.findAll()
