@@ -35,9 +35,10 @@ router.get("/list/:id", (req, res) => {
 });
 
 router.delete("/remove/:id", (req, res) => {
+  const movieId = req.params.id;
   Favorite.destroy({
     where: {
-      id: req.params.id,
+      movie_id: movieId,
     },
   }).then(() => res.sendStatus(202));
 });

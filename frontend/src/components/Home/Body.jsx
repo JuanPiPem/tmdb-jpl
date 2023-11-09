@@ -8,7 +8,6 @@ const Body = ({ movies, onMovieInfo, userId }) => {
   const [displayedMovies, setDisplayedMovies] = useState([]);
   const [favorite, setFavorite] = useState([]);
   const user = useUser();
-  console.log("UUUUUUUU", user);
 
   const isFavorite = (movie) => {
     return favorite.some((film) => film.id === movie.id);
@@ -16,9 +15,11 @@ const Body = ({ movies, onMovieInfo, userId }) => {
 
   const handleFavoriteClick = (movie) => {
     if (isFavorite(movie)) {
+      console.log("Remove película con ID:", movie.id);
       axios
-        .delete(`/api/favorites/remove/${movie.id}`)
+        .delete(`http://localhost:3001/api/favorites/remove/${movie.id}`)
         .then((response) => {
+          console.log("removeeee", response);
           if (response.status === 202) {
             setFavorite(favorite.filter((film) => film.id !== movie.id));
           }
@@ -34,6 +35,7 @@ const Body = ({ movies, onMovieInfo, userId }) => {
         })
         .then((response) => {
           console.log("HHHHHH", response);
+          setFavorite([...favorite, movie]);
         })
         .catch((error) => {
           console.error(error);
