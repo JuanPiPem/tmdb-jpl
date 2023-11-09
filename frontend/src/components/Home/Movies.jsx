@@ -10,6 +10,7 @@ const Movies = () => {
   const [user, setUser] = useState({});
   const [searchResults, setSearchResults] = useState([]);
   const [info, setInfo] = useState(null);
+
   const navigate = useNavigate();
 
   const handleSearch = (searchTerm) => {

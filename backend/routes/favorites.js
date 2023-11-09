@@ -6,18 +6,19 @@ const User = require("../db/models/user");
 const { validateAuth } = require("../middlewares/auth");
 
 router.post("/add", (req, res) => {
-  const movieId = req.body.movie_id;
-  const userId = req.body.user_id;
-
-  User.findByPk(userId).then((user) => {
+  const { movie_id } = req.body;
+  const { user_id } = req.body;
+  console.log("FFFFFF", movie_id);
+  console.log("XXXXXXX", user_id);
+  User.findOne({ where: { id: user_id } }).then((user) => {
     if (!user) {
       throw new Error("Usuario no encontrado");
     }
     Favorite.create({
-      movie_id: movieId,
+      movie_id: movie_id,
     })
       .then((isFavorite) => {
-        return isFavorite.setUser(userId);
+        return isFavorite.setUser(user_id);
       })
       .then((resolve) => {
         res.send(resolve);

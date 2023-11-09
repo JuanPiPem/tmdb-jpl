@@ -1,10 +1,45 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useUser } from "../../context/userContext";
 
 import("./body.css");
 
-const Body = ({ movies, onMovieInfo }) => {
+const Body = ({ movies, onMovieInfo, userId }) => {
   const [displayedMovies, setDisplayedMovies] = useState([]);
+  const [favorite, setFavorite] = useState([]);
+  const user = useUser();
+  console.log("UUUUUUUU", user);
+
+  const isFavorite = (movie) => {
+    return favorite.some((film) => film.id === movie.id);
+  };
+
+  const handleFavoriteClick = (movie) => {
+    if (isFavorite(movie)) {
+      axios
+        .delete(`/api/favorites/remove/${movie.id}`)
+        .then((response) => {
+          if (response.status === 202) {
+            setFavorite(favorite.filter((film) => film.id !== movie.id));
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      axios
+        .post("http://localhost:3001/api/favorites/add", {
+          movie_id: movie.id,
+          user_id: user.id,
+        })
+        .then((response) => {
+          console.log("HHHHHH", response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
 
   useEffect(() => {
     if (movies.length > 0) {
@@ -46,6 +81,12 @@ const Body = ({ movies, onMovieInfo }) => {
             className="movie-poster"
           />
           <h3 className="movie-title">{movie.title}</h3>
+          <button
+            onClick={() => handleFavoriteClick(movie)}
+            className="favorite-button"
+          >
+            {isFavorite(movie) ? "Remove" : "Add to Favorites"}
+          </button>
         </div>
       ))}
     </div>

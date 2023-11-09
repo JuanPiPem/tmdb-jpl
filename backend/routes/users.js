@@ -40,8 +40,9 @@ router.post("/login", (req, res) => {
         email: user.email,
         name: user.name,
         last_name: user.last_name,
+        id: user.id,
       };
-
+      console.log(payload);
       const token = generateToken(payload);
 
       res.cookie("token", token, {

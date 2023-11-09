@@ -26,3 +26,10 @@
 .movie-card:hover .movie-title {
   color: blue;
 }
+.favorite-button {
+  font-size: 12px;
+  /* border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: color 0.3s; */
+}
